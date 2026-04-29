@@ -1,5 +1,6 @@
 # esoc-2026-sktime-mcp-proposal
-Internship proposal for the ESoC 2026 sktime agentic track (Constraint Validation Layer).
+Prototype: PR #229 (strict parameter key validation in instantiate_estimator) is the working prototype for the CVL architecture described in this proposal. It demonstrates the pre-execution validation approach at the parameter level; this project extends it to the mathematical constraint level.
+
 
 ESoC 2026 — Batch 2  |  sktime / GC.OS
 Project Proposal — sktime-mcp Repository
@@ -10,7 +11,7 @@ Email	25f1001180@ds.study.iitm.ac.in
 GitHub	github.com/Mohit25f101
 Organization	sktime / GC.OS  —  sktime-mcp
 Availability	35–40 hrs/week  |  IST (UTC+5:30)  |  Full summer commitment
-Merged PRs	sktime #9313 (merged), #9286 ( almost merged), sktime-mcp param-key validation (merged)
+Merged PRs	sktime [#9313](https://github.com/sktime/sktime/pull/9313) (merged),[ #9286](https://github.com/sktime/sktime/pull/9286) ( almost merged), sktime-mcp PR [#229](https://github.com/sktime/sktime-mcp/pull/229) — Open, Under Review
 
 
 
@@ -25,13 +26,7 @@ silently to sktime, raising opaque internal exceptions that the LLM cannot inter
 This proposal introduces the Constraint Validation Layer (CVL): a single, surgically scoped module
 within sktime-mcp that detects invalid pipelines before execution, maps violations to a typed
 constraint taxonomy, and produces structured, deterministic correction context that any caller — LLM
-or human — can take action immediately. The CVL is purposefully narrow, protocol agnostic, and built
-by the community through sktime's existing _tags infrastructure rather than a
-hand-coded per-estimator register» It’s not a new system it’s the missing validation tier
-which means that the current system is production-ready.
-
-
-
+or human — can take action immediately. The CVL is purposefully narrow, protocol agnostic, and builtby the community through sktime's existing _tags infrastructure rather than ahand-coded per-estimator register» It’s not a new system it’s the missin validationtierwhich means that the current system is production-ready.
 
 00  Design Philosophy: Five Architectural Decisions That Resolve Reviewer Concerns
 
@@ -523,10 +518,11 @@ A bug in ConstraintValidator that blocks a valid pipeline in error would frustra
 06  Proof of Readiness: Prior Contributions
 
 Contribution	Relevance to This Proposal
-sktime #9313 — Merged	Migrated skip config to native _tags system. The same _tags infrastructure that build_constraint_graph() reads to auto-populate constraints. Direct architectural continuity.
-sktime #9286 — Merged	Nightly CI workflow for dependency testing. The CI extension required in Week 2 of this proposal (adding constraints/ to the test matrix) follows the identical pattern.
-sktime #9456 — Open	NaiveForecaster._update() — navigates BaseForecaster's internal state architecture. Required background for the dynamic validation path that reads estimator internal state.
-sktime-mcp param-key validation — Merged	The direct predecessor of ConstraintValidator. Validates parameter names; CVL validates mathematical compatibility. Same abstraction layer, next tier of strictness.
+sktime [#9313](https://github.com/sktime/sktime/pull/9313) — Merged	Migrated skip config to native _tags system. The same _tags infrastructure that build_constraint_graph() reads to auto-populate constraints. Direct architectural continuity.
+sktime PR [#9286](https://github.com/sktime/sktime/pull/9286) — Open, Awaiting Final Merge	Nightly CI workflow for dependency testing. The CI extension required in Week 2 of this proposal (adding constraints/ to the test matrix) follows the identical pattern.
+sktime[ #9456](https://github.com/sktime/sktime/pull/9456) — Open	NaiveForecaster._update() — Implements stateful _update() via sufficient statistics — demonstrates the same incremental state-management pattern the dynamic
+ConstraintValidator uses to avoid recomputing tests on unchanged data.
+sktime-mcp PR [#229](https://github.com/sktime/sktime-mcp/pull/229) — Open, Under Review	The direct predecessor of ConstraintValidator. Validates parameter names; CVL validates mathematical compatibility. Same abstraction layer, next tier of strictness.
 IIT Madras: Econometrics	ADF/KPSS mechanics, power of unit root tests, I(d) estimation, over-differencing consequences. Directly implemented in validate_dynamic() and _check_stationarity().
 IIT Madras: Time Series Analysis	ARIMA identification, Box-Jenkins methodology, seasonal decomposition. Foundation for the stationarity and seasonality constraint types.
 
@@ -538,8 +534,7 @@ The Constraint Validation Layer is the missing validation layer that makes sktim
  
 The tag-driven auto-scaling, caller-agnostic correction strings, opt-out escape hatches, and protocol-agnostic core were all designed to give the maintainers confidence that this module will not become a burden. It is intended to be community-maintained via sktime’s existing infrastructure, rather than by a single contributor.
  
-I have the statistical background to implement the mathematical constraints correctly, the codebase familiarity to integrate without breaking existing behavior, and the track record of merged PRs to show I can navigate the full review cycle. I’m ready to start right away.
-
+I have the statistical background to implement the mathematical constraints correctly, the codebase familiarity to integrate without breaking existing behavior, and the track record of merged PRs to show I can navigate the full review cycle. I am ready to begin immediately — the prototype is already in review.
 
 
 Mohit Kumar  |  IIT Madras  |  github.com/Mohit25f101  |  25f1001180@ds.study.iitm.ac.in
