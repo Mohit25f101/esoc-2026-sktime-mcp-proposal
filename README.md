@@ -11,7 +11,7 @@ Email	25f1001180@ds.study.iitm.ac.in
 GitHub	github.com/Mohit25f101
 Organization	sktime / GC.OS  —  sktime-mcp
 Availability	35–40 hrs/week  |  IST (UTC+5:30)  |  Full summer commitment
-Merged PRs	sktime [#9313](https://github.com/sktime/sktime/pull/9313) (merged),[ #9286](https://github.com/sktime/sktime/pull/9286) ( almost merged), sktime-mcp PR [#229](https://github.com/sktime/sktime-mcp/pull/229) — Open, Under Review
+Merged PRs	sktime [#9313](https://github.com/sktime/sktime/pull/9313) (merged),[ #9286](https://github.com/sktime/sktime/pull/9286) ( Open — Awaiting Final Merge), sktime-mcp PR [#229](https://github.com/sktime/sktime-mcp/pull/229) — Open, Under Review
 
 
 
@@ -26,7 +26,7 @@ silently to sktime, raising opaque internal exceptions that the LLM cannot inter
 This proposal introduces the Constraint Validation Layer (CVL): a single, surgically scoped module
 within sktime-mcp that detects invalid pipelines before execution, maps violations to a typed
 constraint taxonomy, and produces structured, deterministic correction context that any caller — LLM
-or human — can take action immediately. The CVL is purposefully narrow, protocol agnostic, and builtby the community through sktime's existing _tags infrastructure rather than ahand-coded per-estimator register» It’s not a new system it’s the missin validationtierwhich means that the current system is production-ready.
+or human — can take action immediately. The CVL is purposefully narrow, protocol agnostic, and builtby the community through sktime's existing _tags infrastructure rather than a hand-coded per-estimator registry. It’s not a new system; it’s the missing validation tier which ensures that the current system is production-ready.
 
 00  Design Philosophy: Five Architectural Decisions That Resolve Reviewer Concerns
 
