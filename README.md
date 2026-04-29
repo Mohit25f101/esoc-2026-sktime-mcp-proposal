@@ -513,20 +513,24 @@ A bug in ConstraintValidator that blocks a valid pipeline in error would frustra
 •	Mitigation B: Ambiguous stationarity results (when ADF and KPSS disagree) are flagged as WARNING severity instead of ERROR. They are in the dry_run report but they never block execution.
 •	Mitigation C: validate=False: the nuclear escape hatch. One parameter completely removes the CVL from the execution path with no refactoring required.
 
+Section 06: Proof of Readiness
+Constraint Validation Prototype
+To demonstrate that the CVL is implementable — not just
+architecturally sound — I built a working prototype using the
+same state-propagation pattern the production CVL will use:
+👉 View Prototype
+The prototype shows:
 
+Pre-execution constraint validation via component contracts
+Explicit state propagation across pipeline steps
+Correct-by-construction pipeline synthesis instead of
+trial-and-error execution
 
-06  Readme_proof_of_readiness.md 
+It directly extends my prior work in PR #229, moving validation
+from parameter-level checks to pipeline-level semantics.
 
-Prior Contributions Relevance to This Proposal
-sktime [#9313](https://github.com/sktime/sktime/pull/9313) — Merged	Migrated skip config to native _tags system. The same _tags infrastructure that build_constraint_graph() reads to auto-populate constraints. Direct architectural continuity.
-sktime PR [#9286](https://github.com/sktime/sktime/pull/9286) — Open, Awaiting Final Merge	Nightly CI workflow for dependency testing. The CI extension required in Week 2 of this proposal (adding constraints/ to the test matrix) follows the identical pattern.
-sktime[ #9456](https://github.com/sktime/sktime/pull/9456) — Open	NaiveForecaster._update() — Implements stateful _update() via sufficient statistics — demonstrates the same incremental state-management pattern the dynamic
-ConstraintValidator uses to avoid recomputing tests on unchanged data.
-sktime-mcp PR [#229](https://github.com/sktime/sktime-mcp/pull/229) — Open, Under Review	The direct predecessor of ConstraintValidator. Validates parameter names; CVL validates mathematical compatibility. Same abstraction layer, next tier of strictness.
-IIT Madras: Econometrics	ADF/KPSS mechanics, power of unit root tests, I(d) estimation, over-differencing consequences. Directly implemented in validate_dynamic() and _check_stationarity().
-IIT Madras: Time Series Analysis	ARIMA identification, Box-Jenkins methodology, seasonal decomposition. Foundation for the stationarity and seasonality constraint types.
-
-
+Prior Contributions
+ContributionStatusRelevance to CVLsktime PR #9313✅ MergedMigrated skip config to native _tags system — the same _tags infrastructure build_constraint_graph() reads to auto-populate constraints. Direct architectural continuity.sktime PR #9286🟡 Open — Awaiting Final MergeNightly CI workflow for upstream dependency testing. Follows the identical pattern this proposal uses to test the constraints module across sktime's last three minor releases.sktime PR #9456🟡 OpenImplements stateful _update() via sufficient statistics for NaiveForecaster — the same incremental state-management pattern the dynamic ConstraintValidator uses to avoid recomputing stationarity tests on unchanged data.sktime-mcp PR #229🟡 Open — Under ReviewThe direct predecessor of the CVL. Validates parameter names against get_params(). The CVL extends this to mathematical constraint validation. Same abstraction layer, next tier of strictness.IIT Madras: EconometricsAcademicADF/KPSS mechanics, power of unit root tests, I(d) estimation, over-differencing consequences. Directly implemented in validate_dynamic() and _check_stationarity().IIT Madras: Time Series AnalysisAcademicARIMA identification, Box-Jenkins methodology, seasonal decomposition. Foundation for the stationarity and seasonality constraint types.
 
 07  Closing Statement
 
