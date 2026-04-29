@@ -515,9 +515,9 @@ A bug in ConstraintValidator that blocks a valid pipeline in error would frustra
 
 
 
-06  Proof of Readiness: Prior Contributions
+06  Readme_proof_of_readiness.md 
 
-Contribution	Relevance to This Proposal
+Prior Contributions Relevance to This Proposal
 sktime [#9313](https://github.com/sktime/sktime/pull/9313) — Merged	Migrated skip config to native _tags system. The same _tags infrastructure that build_constraint_graph() reads to auto-populate constraints. Direct architectural continuity.
 sktime PR [#9286](https://github.com/sktime/sktime/pull/9286) — Open, Awaiting Final Merge	Nightly CI workflow for dependency testing. The CI extension required in Week 2 of this proposal (adding constraints/ to the test matrix) follows the identical pattern.
 sktime[ #9456](https://github.com/sktime/sktime/pull/9456) — Open	NaiveForecaster._update() — Implements stateful _update() via sufficient statistics — demonstrates the same incremental state-management pattern the dynamic
